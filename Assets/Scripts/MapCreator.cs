@@ -18,10 +18,10 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private int roomOffset;
     [SerializeField] private GameObject wallVertical, wallHorizontal;
 
-    private List<Vector3Int> possibleDoorVerticalPosition;
-    private List<Vector3Int> possibleDoorHorizontalPosition;
-    private List<Vector3Int> possibleWallHorizontalPosition;
-    private List<Vector3Int> possibleWallVerticalPosition;
+    [SerializeField] private List<Vector3Int> possibleDoorVerticalPosition;
+    [SerializeField] private List<Vector3Int> possibleDoorHorizontalPosition;
+    [SerializeField] private List<Vector3Int> possibleWallHorizontalPosition;
+    [SerializeField] private List<Vector3Int> possibleWallVerticalPosition;
 
     void Start()
     {
@@ -147,7 +147,7 @@ public class MapCreator : MonoBehaviour
         }
     }
 
-    private void DestroyAllChildren()
+    public void DestroyAllChildren()
     {
         while(transform.childCount != 0)
         {
@@ -155,6 +155,29 @@ public class MapCreator : MonoBehaviour
             {
                 DestroyImmediate(item.gameObject);
             }
+
         }
+
+        while (possibleDoorVerticalPosition.Count > 0)
+        {
+            possibleDoorVerticalPosition.Clear();
+
+        }
+        while (possibleDoorHorizontalPosition.Count > 0)
+        {
+            possibleDoorHorizontalPosition.Clear();
+
+        }
+        while (possibleWallHorizontalPosition.Count > 0)
+        {
+            possibleWallHorizontalPosition.Clear();
+
+        }
+        while (possibleWallVerticalPosition.Count > 0)
+        {
+            possibleWallVerticalPosition.Clear();
+
+        }
+
     }
 }

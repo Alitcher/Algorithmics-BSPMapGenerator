@@ -14,5 +14,10 @@ public class DungeonCreatorEditor : Editor
         {
             dungeonCreator.CreateMap();
         }
+
+        if (GUILayout.Button("Clear all"))
+        {
+            dungeonCreator.DestroyAllChildren();
+        }
     }
 }

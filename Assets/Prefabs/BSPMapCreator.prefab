@@ -55,3 +55,7 @@ MonoBehaviour:
   roomOffset: 1
   wallVertical: {fileID: 0}
   wallHorizontal: {fileID: 0}
+  possibleDoorVerticalPosition: []
+  possibleDoorHorizontalPosition: []
+  possibleWallHorizontalPosition: []
+  possibleWallVerticalPosition: []
