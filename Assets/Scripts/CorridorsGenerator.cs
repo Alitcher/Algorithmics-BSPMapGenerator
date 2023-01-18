@@ -16,7 +16,12 @@ public class CorridorsGenerator
             {
                 continue;
             }
+
+            node.ChildrenNodeList[0].AddNeighbors(node.ChildrenNodeList[1]);
+            node.ChildrenNodeList[1].AddNeighbors(node.ChildrenNodeList[0]);
+
             CorridorNode corridor = new CorridorNode(node.ChildrenNodeList[0], node.ChildrenNodeList[1], corridorWidth);
+
             corridorList.Add(corridor);
         }
         return corridorList;

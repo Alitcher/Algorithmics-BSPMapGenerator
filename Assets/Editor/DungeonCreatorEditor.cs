@@ -19,5 +19,10 @@ public class DungeonCreatorEditor : Editor
         {
             dungeonCreator.DestroyAllChildren();
         }
+
+        if (GUILayout.Button("PerformBFS"))
+        {
+            dungeonCreator.BFS();
+        }
     }
 }

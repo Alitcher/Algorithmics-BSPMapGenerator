@@ -9,7 +9,7 @@ public class BinarySpacePartitioner
     public RoomNode RootNode { get => rootNode; }
     public BinarySpacePartitioner(int dungeonWidth, int dungeonLength)
     {
-        this.rootNode = new RoomNode(new Vector2Int(0, 0), new Vector2Int(dungeonWidth, dungeonLength), null, 0);
+        this.rootNode = new RoomNode(new Vector2Int(0, 0), new Vector2Int(dungeonWidth, dungeonLength), null, 0, "root");
     }
 
     public List<RoomNode> PrepareNodesCollection(int maxIterations, int roomWidthMin, int roomLengthMin)
@@ -17,6 +17,7 @@ public class BinarySpacePartitioner
         Queue<RoomNode> graph = new Queue<RoomNode>();
         List<RoomNode> listToReturn = new List<RoomNode>();
         graph.Enqueue(this.rootNode);
+        this.rootNode.ID = listToReturn.Count;
         listToReturn.Add(this.rootNode);
         int iterations = 0;
         while (iterations<maxIterations && graph.Count>0)
@@ -44,22 +45,26 @@ public class BinarySpacePartitioner
             node1 = new RoomNode(currentNode.BottomLeftAreaCorner,
                 new Vector2Int(currentNode.TopRightAreaCorner.x, line.Coordinates.y),
                 currentNode,
-                currentNode.TreeLayerIndex + 1);
+                currentNode.TreeLayerIndex + 1,
+                "node1");
             node2 = new RoomNode(new Vector2Int(currentNode.BottomLeftAreaCorner.x, line.Coordinates.y),
                 currentNode.TopRightAreaCorner,
                 currentNode,
-                currentNode.TreeLayerIndex + 1);
+                currentNode.TreeLayerIndex + 1,
+                "node2");
         }
         else
         {
             node1 = new RoomNode(currentNode.BottomLeftAreaCorner,
                 new Vector2Int(line.Coordinates.x,currentNode.TopRightAreaCorner.y),
                 currentNode,
-                currentNode.TreeLayerIndex + 1);
+                currentNode.TreeLayerIndex + 1,
+                "node1");
             node2 = new RoomNode(new Vector2Int(line.Coordinates.x,currentNode.BottomLeftAreaCorner.y),
                 currentNode.TopRightAreaCorner,
                 currentNode,
-                currentNode.TreeLayerIndex + 1);
+                currentNode.TreeLayerIndex + 1,
+                "node2");
         }
         AddNewNodeToCollections(listToReturn, graph, node1);
         AddNewNodeToCollections(listToReturn, graph, node2);
@@ -67,6 +72,7 @@ public class BinarySpacePartitioner
 
     private void AddNewNodeToCollections(List<RoomNode> listToReturn, Queue<RoomNode> graph, RoomNode node)
     {
+        node.ID = listToReturn.Count;
         listToReturn.Add(node);
         graph.Enqueue(node);
     }

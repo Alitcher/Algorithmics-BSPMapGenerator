@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class BSPNode
 {
-    private List<BSPNode> childrenNodeList;
+    public int ID { get; set; }
+    public string name { get; set; }
 
-    public List<BSPNode> ChildrenNodeList { get => childrenNodeList;}
+    private List<BSPNode> childrenNodeList, neighborList;
+
+    public List<BSPNode> ChildrenNodeList { get => childrenNodeList; }
+
+    public List<BSPNode> Neighbors { get => neighborList; }
 
     public bool Visted { get; set; }
+
+    /// <summary>
+    /// store each corner of our mesh, which will be in rectangle
+    /// </summary>
     public Vector2Int BottomLeftAreaCorner { get; set; }
     public Vector2Int BottomRightAreaCorner { get; set; }
     public Vector2Int TopRightAreaCorner { get; set; }
@@ -22,6 +31,7 @@ public class BSPNode
     public BSPNode(BSPNode parentNode)
     {
         childrenNodeList = new List<BSPNode>();
+        neighborList = new List<BSPNode>();
         this.Parent = parentNode;
         if (parentNode != null)
         {
@@ -33,6 +43,11 @@ public class BSPNode
     {
         childrenNodeList.Add(node);
 
+    }
+
+    public void AddNeighbors(BSPNode node)
+    {
+        neighborList.Add(node);
     }
 
     public void RemoveChild(BSPNode node)

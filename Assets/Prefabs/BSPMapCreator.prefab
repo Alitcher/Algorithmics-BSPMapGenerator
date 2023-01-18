@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e1034a63ab3da468576d1dead836ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonWidth: 100
-  dungeonLength: 100
+  BSPTimeElapsed: 0
+  mapWidth: 0
+  mapLength: 0
   roomWidthMin: 25
   roomLengthMin: 25
   maxIterations: 40
@@ -53,8 +54,10 @@ MonoBehaviour:
   roomBottomCornerModifier: 0.1
   roomTopCornerMidifier: 0.9
   roomOffset: 1
-  wallVertical: {fileID: 0}
-  wallHorizontal: {fileID: 0}
+  wallVertical: {fileID: 1722692098722660134, guid: bf033a1353c955f41a6c5d691686b7e5,
+    type: 3}
+  wallHorizontal: {fileID: 7920867873613740612, guid: 1f92b4fa10c3bed44b61614a610fc72f,
+    type: 3}
   possibleDoorVerticalPosition: []
   possibleDoorHorizontalPosition: []
   possibleWallHorizontalPosition: []

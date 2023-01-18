@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    public List<BSPNode> RoomList;
     [SerializeField] private float BSPTimeElapsed;
     [SerializeField] private int mapWidth, mapLength;
     [SerializeField] private int roomWidthMin, roomLengthMin;
@@ -18,14 +17,21 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private float roomTopCornerMidifier;
     [Range(0, 2)]
     [SerializeField] private int roomOffset;
+
+    public void BFS()
+    {
+        PathFindingBFS.BFSForSSSP(MapGenerator.allNodesCollection[0]);
+    }
+
     [SerializeField] private GameObject wallVertical, wallHorizontal;
 
-    [SerializeField] private List<Vector3Int> possibleDoorVerticalPosition;
-    [SerializeField] private List<Vector3Int> possibleDoorHorizontalPosition;
-    [SerializeField] private List<Vector3Int> possibleWallHorizontalPosition;
-    [SerializeField] private List<Vector3Int> possibleWallVerticalPosition;
+    private List<Vector3Int> possibleDoorVerticalPosition;
+    private List<Vector3Int> possibleDoorHorizontalPosition;
+    private List<Vector3Int> possibleWallHorizontalPosition;
+    private List<Vector3Int> possibleWallVerticalPosition;
 
-    private float startTime, endTime;
+    public static float StartTime;
+    public  float startTime, endTime;
 
     void Start()
     {
@@ -35,10 +41,11 @@ public class MapCreator : MonoBehaviour
     public void CreateMap()
     {
         startTime = DateTime.Now.Millisecond;
+        StartTime = startTime;
         DestroyAllChildren();
 
         MapGenerator generator = new MapGenerator(mapWidth, mapLength);
-        List<BSPNode> listOfRooms = generator.CalculateDungeon(maxIterations,
+        List<BSPNode> listOfRooms = generator.CalculateMap(maxIterations,
             roomWidthMin,
             roomLengthMin,
             roomBottomCornerModifier,
@@ -64,12 +71,12 @@ public class MapCreator : MonoBehaviour
 
         }
 
+
+
         endTime = DateTime.Now.Millisecond - startTime;
         BSPTimeElapsed = endTime;
+       // Debug.Log(BSPTimeElapsed);
 
-        Debug.Log(BSPTimeElapsed);
-
-        RoomList = listOfRooms;
     }
 
     private void CreateWalls(GameObject wallParent)
@@ -125,13 +132,12 @@ public class MapCreator : MonoBehaviour
         mesh.uv = uvs;
         mesh.triangles = triangles;
 
-        GameObject dungeonFloor = new GameObject("Mesh" + bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
-
-        dungeonFloor.transform.position = Vector3.zero;
-        dungeonFloor.transform.localScale = Vector3.one;
-        dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;
-        dungeonFloor.GetComponent<MeshRenderer>().material = material;
-        dungeonFloor.transform.parent = transform;
+        GameObject mapFloor = new GameObject("Mesh" + bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
+        mapFloor.transform.position = Vector3.zero;
+        mapFloor.transform.localScale = Vector3.one;
+        mapFloor.GetComponent<MeshFilter>().mesh = mesh;
+        mapFloor.GetComponent<MeshRenderer>().material = material;
+        mapFloor.transform.parent = transform;
 
         if (wallVertical != null && wallHorizontal != null)
         {
@@ -183,22 +189,22 @@ public class MapCreator : MonoBehaviour
 
         }
 
-        while (possibleDoorVerticalPosition.Count > 0)
+        while (possibleDoorVerticalPosition.Count > 0 && possibleDoorVerticalPosition != null)
         {
             possibleDoorVerticalPosition.Clear();
 
         }
-        while (possibleDoorHorizontalPosition.Count > 0)
+        while (possibleDoorHorizontalPosition.Count > 0 && possibleDoorHorizontalPosition != null)
         {
             possibleDoorHorizontalPosition.Clear();
 
         }
-        while (possibleWallHorizontalPosition.Count > 0)
+        while (possibleWallHorizontalPosition.Count > 0 && possibleWallHorizontalPosition != null)
         {
             possibleWallHorizontalPosition.Clear();
 
         }
-        while (possibleWallVerticalPosition.Count > 0)
+        while (possibleWallVerticalPosition.Count > 0 && possibleWallVerticalPosition != null)
         {
             possibleWallVerticalPosition.Clear();
 
